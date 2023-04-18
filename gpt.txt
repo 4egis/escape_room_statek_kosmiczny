@@ -1,0 +1,29 @@
+I have arduino uno board with following attachments on following pins:
+1. On pin 2 - button as input
+2. On pin 3 - button as input
+3. On pin 4 - button as input
+4. On pin 5 - button as input
+5. On pin 6 - WS2812B led stripe as output with 100 leds
+6. On pin 9 - main light
+7. On pin 11 - engine for vibrations
+
+Write code in C++ for arduino that follows these instructions:
+
+Each button starts another Stage. Stages and instructions for them are listed below:
+
+First stage:
+Main light is on.
+A bar of 10 leds length appers on the stripe with leds and floats from one side of stripe to other
+
+
+Second stage:
+Led stripe is just shining with blue colour.
+After 35 seconds from starting second stage, the stripe with leds start pulsating with white light. First the pulsation is slow but throught next 19 seconds it becoming faster and faster.
+
+
+
+You can't use delay() function in this code.
+
+
+
+5. On pin 7 - WS2812B led stripe as output with 48 leds

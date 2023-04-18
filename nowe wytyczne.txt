@@ -1,0 +1,26 @@
+1 tryb : 
+Kinkiety świeca
+Pasek led pływa od lewej do prawej odbijając sie 
+
+2 tryb :
+Pasek led daje lekkie ambientowe światło 
+Po 35 sekundach  załącza się wibracja ( pulsacyjne) i zaczyna się  miganie białego światła ( do ciemności ) i to przyspiesza, przez 19 sekund. 
+Potem światło całkowicie gaśnie i tylko wibracje zostają ( tu najmocniejsze wibracje musza być ) od 95 sekundy trwania tego trybu zaczyna się miganie na zmianę z przerwami leda podzielonego na 3 czesci. Miga to białym światłem. + strobo uruchamia się 3 razy po 5 z przerwami 5 sekundowymi. 
+
+Potem już zostaje tylko to miganie leda.
+
+
+3 tryb
+
+Pasek led daje lekkie ambientowe światło 
+Po 12 sekundach  załącza się wibracja ( pulsacyjnie ) i zaczyna się  miganie białego światła ( do ciemności ) i to przyspiesza, przez 17 sekund. 
+Potem światło całkowicie gaśnie i tylko wibracje zostają ( tu najmocniejsze wibracje musza być )  ale bez przesady, i po chwili gasną  - a od 75 sekundy trwania tego trybu zaczyna się miganie na zmianę z przerwami leda podzielonego na kilka czesci . Miga to białym światłem już do końca.
+
+4 tryb lądowanie 
+
+Szybkie Pulsowanie czerwonego światła na całym pasku led
+
+po lądwoaniu - sprawdzić czas n afilmiku - pływający pasek czerwony
+
+MAINLIGHTPIN 9
+VIBRATIONSPIN 11
