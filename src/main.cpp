@@ -7,8 +7,8 @@
 #define LED_PIN2     8
 
 #define IN_PIN1      2
-#define IN_PIN2      3
-#define IN_PIN3      4
+#define IN_PIN2      4
+#define IN_PIN3      3
 #define IN_PIN4      5
 
 #define MAINLIGHTPIN   9
@@ -281,11 +281,51 @@ class LedStripe : public TimeObject {
     }
 
     void stage3Setup(){
-      return;
+      index = 0;
+      color = CRGB::White;
+      returning = false;
+      compute_pause = 80;
+      min_pause = 20;
+      setAllLeds(color);
+      digitalWrite(STROBEPIN, HIGH);
+      digitalWrite(VIBRATIONSPIN, HIGH);
+      digitalWrite(MAINLIGHTPIN, HIGH);
+      
     }
 
     void stage3(){
-      return;
+      if( phase == 1 ){
+        Serial.println("stage 3 phase 1");
+        // pasek led daje lekkie ambientowe swiatlo
+        setAllLeds(CRGB::Blue);
+        FastLED.setBrightness(60);
+      }
+      else if( phase == 2 ){
+        Serial.println("stage 3 phase 2");
+        //Po 12 sekundach  załącza się wibracja ( pulsacyjne) i 
+        //zaczyna się  miganie białego światła ( do ciemności ) i 
+        //to przyspiesza, przez 17 sekund.
+
+        allPulsating();
+        if( pulsing_speed < 860) pulsing_speed++;
+        if( compute_pause > min_pause ) compute_pause -= 1;
+      }
+      else if( phase == 3 ){
+        Serial.println("stage 3 phase 3");
+        //Potem światło całkowicie gaśnie i tylko wibracje zostają
+        // ( tu najmocniejsze wibracje musza być )  
+
+        setAllLeds(CRGB::Black);
+      }
+      else if( phase == 4 ){
+        Serial.println("stage 3 phase 4");
+        compute_pause = 500;
+        //od 75 sekundy trwania tego trybu zaczyna się miganie na zmianę
+        //z przerwami leda podzielonego na 3 czesci. Miga to białym światłem.
+        //+ strobo uruchamia się 3 razy po 5 z przerwami 5 sekundowymi.
+        sixPartsRandom(CRGB::Red);
+
+      }
     }
 
     void stage4Setup(){
@@ -314,7 +354,7 @@ class LedStripe : public TimeObject {
                 break;
             
             case 3:
-                stage3();
+                stage3(phase);
                 Serial.println("stage 3");
                 break;
 
@@ -431,7 +471,28 @@ void stage3Setup(){
 }
 
 void stage3(){
-  longLedStripe.loop(3, 0);
+  unsigned long time = millis();
+    if( time - currentStageStart < 12000 ){
+    longLedStripe.loop(3, 1);
+  }
+  else if( time - currentStageStart < 12000 + 17500){
+    longLedStripe.loop(3, 2);
+    vibrationsEngine.loop();
+  } 
+  else if( time - currentStageStart < 75500 ){
+    longLedStripe.loop(3, 3);
+    if( time - currentStageStart >= 12000 + 17500 + 10000){
+      digitalWrite(VIBRATIONSPIN, HIGH);
+    }
+    else{
+      vibrationsEngine.set_on_off_time(6000, 700);
+      vibrationsEngine.loop();
+    }
+  }
+  else{
+    digitalWrite(VIBRATIONSPIN, HIGH);
+    longLedStripe.loop(2, 4);
+  }
 }
 
 void stage4Setup(){
