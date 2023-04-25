@@ -198,6 +198,7 @@ class LedStripe : public TimeObject {
 
     void stage1Setup()
     {
+      is_on = true;
       for(int i = 0; i < NUM_LEDS; i++){
         leds[i] = background_color;
       }
@@ -351,6 +352,7 @@ class LedStripe : public TimeObject {
             
             case 2:
                 stage2(phase);
+                Serial.println("stage 2");
                 break;
             
             case 3:
@@ -582,6 +584,7 @@ void setup() {
   digitalWrite(VIBRATIONSPIN, HIGH);
   digitalWrite(STROBEPIN, HIGH);
 
+  FastLED.setBrightness(255);
   stage1Setup();
 }
 
@@ -590,10 +593,22 @@ void loop() {
   //shortLedStripe.setAllLeds(CRGB::Blue);
   buttons();
   randomLeds(5000);
-  if( stage1_on ) stage1();
-  if( stage2_on ) stage2();
-  if( stage3_on ) stage3();
-  if( stage4_on ) stage4();
+  if( stage1_on ) {
+    Serial.println("stage 1 is on");
+    stage1();
+  }
+  if( stage2_on ){
+    Serial.println("stage 2 is on");
+     stage2();
+  }
+  if( stage3_on ){
+    Serial.println("stage 3 is on");
+    stage3();
+  } 
+  if( stage4_on ){
+    Serial.println("stage 4 is on");
+    stage4();
+  }
   
   FastLED.show();
 }
